@@ -72,8 +72,5 @@ cd frontend
 npm run dev
 ```
 
-The application should now be running at:
+The application should now be running at: http://localhost:5173
 
-```text
-http://localhost:5173
-```
