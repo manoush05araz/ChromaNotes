@@ -1,0 +1,52 @@
+server.js
+Purpose:
+This is the entry point of the backend. It initializes the Express server, configures middleware, connects to MongoDB, and mounts the API routes.
+Main Responsibilities:
+Initialize and configure the Express app.
+Apply middleware for JSON parsing and CORS.
+Mount routes for /api/notes.
+Connect to MongoDB using the connectDB() function.
+Start the backend server on the designated port (default = 5001).
+Behaviour Summary:
+Once executed, the server listens for HTTP requests from the frontend (React app) and forwards them to the appropriate route handlers.
+
+config/db.js
+Purpose:
+Handles connection between the backend and the MongoDB database using Mongoose.
+Main Responsibilities:
+Establish a connection to the MongoDB database.
+Log successful or failed connections.
+Exit the process if a connection error occurs.
+Behaviour Summary:
+This file ensures the backend is connected to MongoDB before handling API requests. It also ensures the app terminates gracefully on connection failure.
+
+models/Note.js
+Purpose:
+Defines the data model (schema) for the Note collection in MongoDB using Mongoose.
+Main Responsibilities:
+Represent a “Note” as a document in MongoDB.
+Enforce field structure and validation (title, content).
+Enable automatic timestamps (createdAt, updatedAt).
+Behaviour Summary:
+This file defines how each note is structured in the database, ensuring consistency and validation before saving or updating.
+
+routes/notesRoutes.js
+Purpose:
+Defines all API endpoints for the Note resource.
+Each endpoint is linked to a controller function that executes the logic.
+Main Responsibilities:
+Define RESTful routes for GET, POST, PUT, and DELETE.
+Pass requests to the appropriate controller functions.
+Behaviour Summary:
+This file acts as a routing layer between HTTP requests and business logic. It keeps the routes organized and decoupled from the main server logic.
+
+controllers/notesController.js
+Purpose:
+Implements the business logic for all note-related operations — reading, creating, updating, and deleting notes.
+Main Responsibilities:
+Handle incoming requests from notesRoutes.js.
+Interact with the Note model to perform CRUD operations.
+Send back appropriate HTTP responses and status codes.
+Handle errors and invalid inputs gracefully.
+Behaviour Summary:
+This controller acts as the business logic layer of the backend. It keeps the code modular and easy to maintain, separating logic from routing.

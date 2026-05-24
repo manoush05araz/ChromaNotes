@@ -1,0 +1,94 @@
+1. models/Note.js (Reminder support)
+Purpose (unchanged):
+Defines the Note MongoDB schema using Mongoose.
+Sprint 3 Additions (US12 – Reminders):
+New fields (used by the controllers + scheduler):
+reminderTime: Date – optional timestamp for when the user wants to be reminded about a note.
+reminderSent: Boolean – tracks whether the reminder for this note has already been sent.
+These fields are now set and updated through createNote / updateNote in notesController.js, and consumed by reminderScheduler.js to trigger one-time notifications.
+
+2. controllers/notesController.js (ReminderTime support)
+Purpose (existing):
+Handles business logic for all note operations (CRUD, pinning, tagging, exporting, image upload, etc.).
+Sprint 3 Additions (US12 – Reminders):
+createNote(req, res)
+Now accepts reminderTime from req.body in addition to styling fields.
+When a note is created, it initializes:
+reminderTime – saved as provided by the frontend.
+reminderSent: false – ensures the scheduler knows this note still needs a reminder.
+updateNote(req, res)
+Now also accepts and updates reminderTime.
+Resets reminderSent to false on every update so that:
+If the user changes the reminder time, a new reminder can be sent at the updated time.
+The scheduler only sends the reminder once per configured date/time.
+
+3. models/Setting.js (Background theme settings)
+Purpose (US10 – Background theme):
+Stores global application settings related to UI appearance. Currently used to persist the selected background theme.
+Behavior:
+Uses an enum to strictly validate allowed themes: ["light", "dark", "pastel"].
+Defaults to "light" when no explicit theme is set.
+Designed to be used as a singleton settings document (findOne() / findOneAndUpdate()).
+Sprint 3:
+This entire model was added in Sprint 3 to support persistent background theme customization.
+
+4. routes/settingsRoutes.js
+Purpose (US10 – Background theme):
+Defines the REST API endpoints for reading and updating application settings, specifically the background theme.
+Behavior:
+Delegates all logic to settingsController.js.
+Typically mounted under a base path such as /api/settings.
+Sprint 3:
+New router added to expose backend settings APIs to the frontend.
+
+5. controllers/settingsController.js
+Purpose (US10 – Background theme):
+Implements the business logic for retrieving and updating UI settings in MongoDB.
+Functions:
+getSettings(req, res)
+Fetches the single settings document using Setting.findOne().
+If no document exists (first run), it creates one with default values (backgroundTheme defaults to "light").
+Returns the current settings to the client.
+updateSettings(req, res)
+Reads backgroundTheme from req.body.
+Validates that it is one of: "light", "dark", "pastel".
+If invalid, returns HTTP 400 with a clear error message.
+Uses Setting.findOneAndUpdate({}, { backgroundTheme }, { new: true, upsert: true }) to:
+Update the existing settings document, or
+Create one if it doesn’t exist.
+Returns the updated settings document.
+Sprint 3 Additions:
+Entire settings controller added this sprint to support saving and loading the user’s theme choice.
+
+6. schedulers/reminderScheduler.js
+Purpose (US12 – Reminders):
+Background scheduler that periodically checks for due reminders and triggers real-time notifications.
+Key Responsibilities:
+Uses node-cron to schedule a job that runs every minute
+Ensures strict validation and a single source of truth for background theme configuration.
+On each run:
+Gets the current timestamp: const now = new Date();
+Queries the Note collection for notes that:
+Have a reminderTime less than or equal to now
+Have reminderSent: false
+For each matching note:
+Calls sendNotification(note) from notificationService.js
+Sets note.reminderSent = true and saves the note, ensuring each reminder is only sent once.
+Sprint 3 Additions:
+New scheduler module introduced in Sprint 3.
+Implements the core logic of the reminder feature and connects notes data with real-time notifications.
+
+7. services/notificationService.js
+Purpose (US12 – Reminders):
+Provides a single function to emit reminder notifications to connected clients over Socket.io.
+Key Responsibilities:
+Imports the initialized Socket.io server instance from server.js
+Exposes sendNotification(note)
+Emits a "reminder" event over Socket.io
+Logs a message to the backend console for debugging
+Behavior:
+Designed to be used by reminderScheduler.js, but can also be reused for other notification triggers in the future (e.g., manual reminders).
+Uses a single broadcast (io.emit) so every connected client can receive the reminder event and decide how to display it (e.g., toast notifications).
+Sprint 3 Additions:
+Entire service added this sprint as part of the reminder feature.
+Decouples notification delivery from scheduling logic.

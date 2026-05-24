@@ -1,0 +1,172 @@
+1. server.js
+Purpose:
+Initializes the Express server
+Adds middleware
+Connects to MongoDB
+Registers all API routes
+
+Key Responsibilities:
+Configures CORS for frontend communication
+Parses JSON bodies
+Mounts notes and tags routes
+Starts backend server on port 5001
+
+Notable Sprint 2 Update:
+Added support for new routes
+/api/tags
+New PATCH, POST, DELETE tag/pin routes in notes
+
+
+
+2. routes/notesRoutes.js
+Purpose:
+Defines all REST API endpoints related to Notes.
+
+Endpoints:
+Method	- Route	- Description
+GET	- /	- Get all notes
+GET	- /pinned	- Get all pinned notes
+GET	- /tag/:tagId	- Get notes filtered by tag
+POST - /	- Create a new note
+PUT	- /:id	- Update a note
+DELETE	- /:id	- Delete a note
+POST	- /:id/tags	- Assign a tag to a note
+DELETE	- /:id/tags/:tagId	- Remove a tag from a note
+PATCH	- /:id/pin	- Toggle a note’s pinned status
+
+Sprint 2 Feature Routes:
+PATCH /:id/pin
+POST /:id/tags
+DELETE /:id/tags/:tagId
+GET /pinned
+
+
+
+3. routes/tagsRoutes.js
+Purpose:
+Handles tag CRUD operations.
+
+Endpoints:
+Method	- Route	- Description
+GET	- /	- Get all tags
+POST	- /	- Create a new tag
+DELETE	- /:id	Delete tag + automatically remove it from notes
+
+Sprint 2 Feature
+All routes in this file are new for Sprint 2.
+
+
+
+4. models/Note.js
+Purpose:
+Defines the Note MongoDB schema using Mongoose.
+
+Fields
+Field	- Type	- Description
+title	- String	- Required
+content	- String	- Required
+tags	- [ObjectId]	- References Tag model
+pinned	- Boolean	- Used for pinning
+color	- String	- Note background color
+fontStyle	- String	- Font styling
+fontSize	- Number	- Font size
+timestamps	- Auto	- Created/Updated times
+
+Sprint 2 Additions:
+Tag reference array
+Pinned boolean
+Styling fields (color, fontStyle, fontSize)
+
+
+
+5. models/Tag.js
+Purpose:
+Defines the Tag schema.
+
+Fields:
+Field	- Type	- Description
+name	- String	- Unique tag name
+
+Sprint 2:
+This entire model was added in Sprint 2.
+
+
+
+6. controllers/notesController.js
+Purpose:
+Handles business logic for all note operations.
+
+getAllNotes()
+Returns all notes.
+
+getAllPinnedNotes() — New
+Returns notes where { pinned: true }.
+
+createNote()
+Creates a new note with optional styling fields.
+
+deleteNote()
+Deletes a note and validates the ObjectId.
+
+updateNote()
+Updates:
+title
+content
+color
+fontStyle
+fontSize
+
+getNotesByTag(tagId)
+Finds all notes containing a specific tag.
+
+addTagToNote()
+Adds a tag to a note’s tags array if not already included.
+Validates:
+Note ID
+Tag ID
+
+removeTagFromNote()
+Removes a tag from a note’s tag list.
+
+togglePinNote()
+Toggles a note's pinned status.
+
+
+
+7. controllers/tagsController.js
+Purpose:
+Business logic for all tag operations.
+
+getAllTags()
+Returns all tags.
+
+createTag()
+Creates a new tag.
+
+deleteTag()
+Deletes a tag
+Removes the tag from all notes that reference it
+
+
+
+8. config/db.js
+Purpose:
+Handles MongoDB connection.
+
+Behavior:
+Connects using MONGO_URI
+Exits the process on connection failure
+
+
+
+Summary of Sprint 2 Additions
+Tag management system:
+New Tag model
+New tag routes
+Ability to assign or remove tags on notes
+Fetch notes by tag
+Cascade removal of tag references on tag deletion
+
+Pinning system:
+Ability to pin/unpin notes
+Fetch pinned notes

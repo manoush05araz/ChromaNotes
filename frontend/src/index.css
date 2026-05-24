@@ -1,0 +1,7 @@
+@import "tailwindcss";
+
+/* pastel gradient */
+.pastel-bg {
+    background: radial-gradient(circle at 20% 20%, #ffd6ff 0%, #ffe8f4 20%, #e8f4ff 40%, #ddfff4 60%, #f8ffe5 80%);
+    background-attachment: fixed;
+}

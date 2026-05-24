@@ -1,0 +1,9 @@
+The HomePage function stores three states, one for storing which note to edit, one for whether or not the add note form is displayed, and one for whether or not the edit note form is displayed. 
+By default it displays a NotesList component that displays all the notes in the database. 
+
+When the add note button on the header is clicked, a NoteForm component is displayed for adding notes. When the form is submitted, a POST request is sent in the handleAddNoteFormSubmit function.
+
+When the edit button is clicked on any note in NotesList, a NoteForm component is displayed for editing that note, and the note being edited is stored in a state. When the form is
+submitted, a PUT request is sent in the handleEditNoteFormSubmit function, to a route with the ID of the note being edited.
+
+When the back button is clicked when the NoteForm is displayed, the NotesList will be displayed again.

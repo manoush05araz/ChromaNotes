@@ -1,0 +1,8 @@
+The notesRoutes file defines the API routes for handling notes. A new route was added for updating notes using a PUT request. 
+This route waits for requests sent to /api/notes/:id, where :id represents the note’s unique identifier. 
+When a request is made to this route, the updateNote controller function is called from notesController file.
+
+The notesController file contains the logic for performing CRUD operations on notes. The updateNote function was added to handle editing an existing note.
+It extracts the title and content from the request body, finds the note by its ID in the database, and updates it with the new data.
+If the note exists, the updated note is returned in the response. If the note is not found, a 404 status code is returned.
+If any other error occurs, a 500 status code is returned. This allows users to modify their notes directly through the Edit Note feature on the frontend.

@@ -1,0 +1,15 @@
+The NotesList component manages the display and deletion of notes from the database. 
+It has two states: one for storing the array of notes fetched from the API, and one for 
+tracking the loading status during data operations.
+
+When the component loads, it automatically fetches all notes from the /notes API endpoint 
+and displays them. Each note is shown in a card format with its title, content, and user-selected colour and font style. The background of each note card and the font style are set using the color and fontStyle fields and stored in the database. If a note does not contain style fields, a default value is applied.
+
+When the delete button is clicked on any note card, the note is immediately removed from the 
+UI, and a delete request is sent to the /notes/[id] API endpoint. If the deletion fails, 
+the note is restored, and an error message is displayed.
+
+The component handles multiple states, including loading messages while fetching data, 
+empty state messages when no notes exist, and error notifications for failed operations. It fully supports the new colour and font customization feature. Font identifiers such as "arial" are mapped to actual CSS font families. This allows NotesList to display personalized notes consistently and accurately.
+
+The StyleControl component provides the interface for customizing a note's appearance. It has a predefined list of colours and fonts for each note. Selecting a colour updates the state in NoteForm and adds an outline effect to highlight which colour is selected. The font selector is a dropdown menu with labels each mapped to a value for the database. StyleControl does not make any API calls itself, but sends updates to NoteForm through callback functions to ensure the data is stored and submitted correctly with the rest of the note's fields.

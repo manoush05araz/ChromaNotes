@@ -1,0 +1,14 @@
+# User Stories
+
+- As a user, I want to log into my account so that I can access my notes from any device.
+- As a user, I want my notes to save automatically so that I don't lose progress if I forget to save.
+- As a user, I want to search for notes by title, content or tags so that I can find them quickly.
+- As a user, I want to be able to organize my notes into folders or categories so I can keep related ideas together.
+- As a user, I want to be able to insert images into my notes so that I am able to visually support my ideas or incorporate reference diagrams.
+- As a user, I want to be able to set reminders and get notified about my due dates so that I don't forget important tasks.
+- As a user, I want to be able to apply different note templates (to-do list, journal entry) so that I can start writing faster without having to format each time.
+- As a user, I want to export my notes as PDF or text files so that I can back them up or share them easily.
+- As a user, I want to customize the background theme such as making it light, dark, or pastel so that the app matches my mood. 
+- As a user, I want to customize wallpapers and have designed backgrounds so that my workspace feels more personalized.
+- As a user, I want to be able to archive or hide older notes so that my workspace remains uncluttered.
+- As a user, I want my notes to sync automatically across all devices, so that I always have the latest version.

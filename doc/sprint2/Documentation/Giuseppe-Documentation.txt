@@ -1,0 +1,22 @@
+The HomePage function stores three states, one for storing which note to edit, one for whether or not the add note form is displayed, and one for whether or not the edit note form is displayed. 
+By default it displays a NotesList component that displays all the notes in the database. 
+
+When the add note button on the header is clicked, a NoteForm component is displayed for adding notes. When the form is submitted, a POST request is sent in the handleAddNoteFormSubmit function.
+
+When the edit button is clicked on any note in NotesList, a NoteForm component is displayed for editing that note, and the note being edited is stored in a state. When the form is
+submitted, a PUT request is sent in the handleEditNoteFormSubmit function, to a route with the ID of the note being edited.
+
+When the back button is clicked when the NoteForm is displayed, the NotesList will be displayed again.
+
+When the pin button is clicked on any note in NotesList, a PATCH request is sent to toggle the note's status of being pinned. It will then 
+show as the opposite status of what it was before the pin button is clicked. Pinned notes will appear first within the list.
+
+The user can sort the notes displayed in NotesList using the Sort button. This will display the notes according to the sorting method chosen.
+Pinned notes will still appear first, but they will be sorted accordingly amongst themselves.
+
+The Sidebar component allows users to display certain kinds of notes only. The pinned button only shows notes where the pinned field is true.
+Each tag button only displays notes that contain that tag in their tags list.
+The edit tags button displays the EditTagsForm component.
+
+The EditTagsForm component appears as a pop up that shows all existing tags. Filling out the text area at the bottom for the tag title and clicking the add button
+will send a POST request to create a new tag. Clicking the delete button next to any tag sends a DELETE request to remove that tag.

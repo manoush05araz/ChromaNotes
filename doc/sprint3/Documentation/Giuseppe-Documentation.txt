@@ -1,0 +1,10 @@
+Clicking the 'export' icon on a note brings up a pop-up menu where the user can pick what file format they'd like to export the note as.
+Picking either pdf or txt will download the note to the user's device in the selected format.
+
+The notes to be displayed are passed to the NotesList component depending on if the user has selected the pinned, archived, or tag buttons. Typing a word in the search bar
+will filter the displayed notes passed to NotesList to only show those notes containing the keyword in the title or body of the note. Text is case insensitive. 
+
+The user can add an image to a note when creating or editing the note with the NoteForm component. Clicking on the 'Attatch Image' button will open up the
+user's file explorer, and allow an image file to be uploaded. The images they upload are then displayed. When the user clicks the 'Add Note' or 'Edit Note' buttons, 
+the images are uploaded to the backend server through an API delete request in HomePage.jsx. The user can also delete notes from the NoteForm object. 
+When a note is deleted, all images the note contained are also deleted.

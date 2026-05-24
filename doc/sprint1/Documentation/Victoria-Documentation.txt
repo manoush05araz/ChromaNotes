@@ -1,0 +1,13 @@
+The NotesList component manages the display and deletion of notes from the database. 
+It has two states: one for storing the array of notes fetched from the API, and one for 
+tracking the loading status during data operations.
+
+When the component loads, it automatically fetches all notes from the /notes API endpoint 
+and displays them. Each note is shown in a card format with its title and content.
+
+When the delete button is clicked on any note card, the note is immediately removed from the 
+UI, and a delete request is sent to the /notes/[id] API endpoint. If the deletion fails, 
+the note is restored, and an error message is displayed.
+
+The component handles multiple states, including loading messages while fetching data, 
+empty state messages when no notes exist, and error notifications for failed operations.
